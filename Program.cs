@@ -1,36 +1,86 @@
 ﻿// Max Sultan, Jan 28th 2026, Lab 3: todo list
 
-// Lab Steps
-// Create methods inside of your class to handle the necessesary items in your ToDo list including at least:
-// DisplayTask()
-// DisplayDescription()
-// MarkAsCompleted()
-// In your program's Main method, create a list of "Task"s (whether or not you start off with an empty list or some default tasks is up to you).
-// Allow the user to create a Task with a title and description. Automatically assign the ID to the next available ID. (hint: this could be as simple as newTaskId = taskList.Count).
-// Display all Tasks (like the example below).
-// Prompt the user to either enter i for information on a task, + to add a task, or x to toggle whether or not a task is marked as complete.
-// When the user presses i the program asks which task number. If the user enters a valid task ID then task's details (including its description, which is not displayed in the task list) are printed to the console. The program then re-displays the list of tasks.
-// When the user presses + the program asks for a task name and a description; uses those values to create a new Task and adds that to the list of tasks. The program then re-displays the newly-updated list.
-// When the user presses x the program asks which task number the user wants to toggle. If the user enters a valid task ID that task has its IsComplete field toggled. The program then re-displays the newly-updated list.
-
 static void Main()
 {
-    
+    List<Task> Todos = [
+        new Task("Do Laundry", "There are clothes all over your bedroom", false),
+        new Task("Make Lunch", "You will be hungry, trust me", false),
+        new Task("Do Homework", "Lab 3: todo list", false),
+    ];
+    ConsoleKey userInput;
+    Console.WriteLine("Welcome to Todo List app");
+
+    do
+    {    
+        Todos.ForEach(task => task.DisplayTask());
+        Console.WriteLine("Press '+' to add a task. Press 'x' to toggle whether or not the task is complete. Press 'i' to view a task's information.");
+        userInput = Console.ReadKey().Key;
+        Console.WriteLine("\n");
+        if(userInput == ConsoleKey.Add)
+        {
+            Console.Write("Enter a task title: ");
+            string title = Console.ReadLine();
+            Console.Write("Enter a task description: ");
+            string description = Console.ReadLine();
+            Todos.Add(new Task(title, description, false));
+        } 
+        else if (userInput == ConsoleKey.I)
+        {
+            Console.Write("Enter the ID of the task: ");
+            string todoID = Console.ReadLine();
+            if(int.TryParse(todoID, out int parsedTodoID)){
+                if(Todos.Select(todo => todo.ID).Contains(parsedTodoID))
+                {
+                    Task selectedTodo = Todos.Find(todo => todo.ID == parsedTodoID);
+                    selectedTodo.DisplayDescription();
+                }
+                else
+                    Console.WriteLine("This ID does not exist in the list");
+            } else
+                Console.WriteLine("Invalid Input");
+        } 
+        else if (userInput == ConsoleKey.X)
+        {
+            Console.Write("Enter the ID of the task: ");
+            string todoID = Console.ReadLine();
+            if(int.TryParse(todoID, out int parsedTodoID)){
+                if(Todos.Select(todo => todo.ID).Contains(parsedTodoID))
+                {
+                    Task selectedTodo = Todos.Find(todo => todo.ID == parsedTodoID);
+                    selectedTodo.MarkAsCompleted();
+                }
+                else
+                    Console.WriteLine("This ID does not exist in the list");
+            } else
+                Console.WriteLine("Invalid Input");
+        }
+        Console.WriteLine("\n");
+    } while (userInput != ConsoleKey.Escape);
 }
 
 Main();
 
-class Task()
+class Task
 {
+    public static int NextId = 0;
     public int ID {get; set;}
     public string Title {get; set;}
     public string Description {get; set;}
     public bool IsComplete {get; set;}
 
-
-    public void DisplayTask(int index)
+    public Task(string title, string description, bool isComplete)
     {
-        Console.WriteLine($"[{(IsComplete ? ' ' : 'X')}] {index} {Title}");
+        ID = NextId;
+        NextId++;
+        Description = description;
+        Title = title;
+        IsComplete = isComplete;
+    }
+
+
+    public void DisplayTask()
+    {
+        Console.WriteLine($"[{(IsComplete ? 'X' : ' ')}] {ID} {Title}");
     }
     public void DisplayDescription()
     {

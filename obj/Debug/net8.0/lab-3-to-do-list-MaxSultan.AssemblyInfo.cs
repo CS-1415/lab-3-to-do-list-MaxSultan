@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lab-3-to-do-list-MaxSultan")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2acc5a42b8f6ed01436333d921d737463e022e32")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18495405cf7f0c0421ae1c296d976951a6eb577d")]
 [assembly: System.Reflection.AssemblyProductAttribute("lab-3-to-do-list-MaxSultan")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lab-3-to-do-list-MaxSultan")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
